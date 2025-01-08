@@ -1,7 +1,7 @@
-playwright==1.49.1
-pytest==7.1.2
-pytest-playwright==0.3.0
-pydantic==1.9.0
-allure-pytest==2.9.45
-websockets==10.1  # Matching Playwright's required version
+pytest==7.4.0
+playwright==1.39.0
+pytest-playwright==0.4.0
+allure-pytest==2.13.2
+pydantic==2.0.3
+python-dotenv==1.0.0
 

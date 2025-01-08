@@ -1,26 +1,20 @@
 # Makefile for setting up and running the woltest-automation-framework
 
+.PHONY: setup test clean allure-report
+
 setup:
-	@echo "Creating virtual environment..."
-	python -m venv venv
-	@echo "Activating virtual environment..."
-	source venv/bin/activate
-	@echo "Installing dependencies..."
-	pip install -r requirements.txt
-	@echo "Installing Playwright browsers..."
-	python -m playwright install
+	pip install -e .
+	pip install pytest playwright pytest-playwright allure-pytest
+	playwright install
 
 test:
-	@echo "Running tests with Pytest..."
-	pytest
-
-allure-report:
-	@echo "Generating Allure report..."
-	allure serve /tmp/my_allure_results
+	pytest tests/ -v --alluredir=./allure-results
 
 clean:
-	@echo "Cleaning up..."
-	rm -rf __pycache__
-	rm -rf .pytest_cache
+	rm -rf ./allure-results
+	rm -rf ./logs
+	find . -type d -name "__pycache__" -exec rm -rf {} +
 
-.PHONY: setup test allure-report clean
+allure-report:
+	allure generate ./allure-results -o ./allure-report --clean
+	allure open ./allure-report
